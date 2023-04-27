@@ -1,9 +1,6 @@
 #include "main.h"
 #include "Subsystems/Drivetrain.hpp"
-#include "Subsystems/IntakeRoller.hpp"
-#include "Subsystems/Shooter.hpp"
-#include "Subsystems/Expansion.hpp"
-#include "autonomous.hpp"
+
 #include "pros/rtos.h"
 #include "pros/rtos.hpp"
 #include "Utility/DisplayImage.hpp"
@@ -37,7 +34,7 @@ void initialize()
 {
 		Drivetrain drive;
 
-		drive.resetGyro();
+	
 	// pros::lcd::initialize();
 	// pros::lcd::set_text(1, "Hello PROS User!");
 
@@ -89,7 +86,7 @@ void autonomous()
 	// hardCodedAuton();
 	// HCRollerDisc();
 	// HCRollerTwoDisc();
-	odomAutonAWP();
+
 	// PIDAutonFarRollDisk();
 	// PIDRollerLow();
 }
@@ -110,52 +107,25 @@ void autonomous()
 
 void opcontrol()
 {
-	#ifdef IMAGE_HPP
-	LV_IMG_DECLARE(int1);
-	lv_obj_t* img_src = lv_img_create(lv_scr_act(), NULL);
-	lv_img_set_src(img_src, &int1);
-	lv_obj_set_pos(img_src, 100, 0);      /*Set the positions*/
-    lv_obj_set_drag(img_src, true);
-	#endif
+	
 
+	//Everything is set up here
 
 	pros::Controller driver(pros::E_CONTROLLER_MASTER);
 	Drivetrain drive;
-	IntakeRoller intake;
-	Shooter shooter;
-	Expansion expansion;
 
-	// drive.resetGyro();
-	// pros::delay(4000);
 
-	// drive.setRobotPose(persistPose);
+	
+	drive.setState(Drivetrain::DrivetrainStates::HUMAN_CONTROL);
+	
 
-	// driver.print(2, 2, "%.1f, %.1f, %.4f", persistPose.getXComponent(), persistPose.getYComponent(), persistPose.getThetaComponent());
-
-	drive.setState(Drivetrain::DrivetrainStates::OPEN_LOOP);
-	intake.setIntakeState(IntakeRoller::IntakeStates::OPERATOR_CONTROL);
-	expansion.setState(Expansion::ExpansionStates::OPERATOR_CONTROL);
-
-	shooter.setState(Shooter::ShooterStates::OPERATOR_CONTROL);
-
-	shooter.setTargetRPM(340);
-	shooter.setIndexerState(true);
-	expansion.expansionPistonR->set_value(false);
-    expansion.blockerPiston->set_value(false);
+	
 
 	std::uint32_t oppStartTime = pros::millis();
 	while (true)
 	{
 
 		drive.updateDrivetrain(driver);
-		intake.updateIntake(driver);
-		shooter.updateShooter(driver);
-
-		if ((pros::millis() - oppStartTime) > 95000)
-		{
-			expansion.updateExpansion(driver);
-			expansion.expand();
-		}
 
 		pros::delay(50);
 	}
