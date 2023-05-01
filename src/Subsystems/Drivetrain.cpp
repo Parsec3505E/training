@@ -7,9 +7,15 @@
 Drivetrain::Drivetrain()
 {
     // Construct the Motor objects
+    // Find out what the ports are
     rightFront = new pros::Motor(6, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
     rightFront->set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
-    //CONSTRUCT MORE
+    rightBack = new pros::Motor(7, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
+    rightBack->set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+    leftFront = new pros::Motor(8, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
+    leftFront->set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+    leftBack = new pros::Motor(9, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
+    leftBack->set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
   
 }
 

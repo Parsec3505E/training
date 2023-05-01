@@ -29,6 +29,9 @@ class Drivetrain
 
         // Drivetrain Motor Declarations
         pros::Motor* rightFront;
+        pros::Motor* rightBack;
+        pros::Motor* leftFront;
+        pros::Motor* leftBack;
         
 
        
