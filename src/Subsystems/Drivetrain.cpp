@@ -46,11 +46,11 @@ void Drivetrain::updateDrivetrain(pros::Controller &driver)
 
         if (driver.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B))
         {
-            rightFront->move_velocity(100);
-            rightBack->move_velocity(100);
+            rightFront->move_velocity(0);
+            rightBack->move_velocity(0);
 
-            leftFront->move_velocity(100);
-            leftBack->move_velocity(100);
+            leftFront->move_velocity(0);
+            leftBack->move_velocity(0);
 
         }
 
@@ -76,8 +76,9 @@ void Drivetrain::updateDrivetrain(pros::Controller &driver)
         
         if (driver.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A))
         {
-            break;
+            mDriveState = MOVE_DISTANCE;
         }
+        break;
     }
 
 // ======================== IGNORE THESE ====================================================================================
@@ -107,6 +108,9 @@ void Drivetrain::moveSeconds(int seconds, int vel)
 {
 
     rightFront->move_velocity(vel);
+    rightBack->move_velocity(vel);
+    leftFront->move_velocity(vel);
+    leftBack->move_velocity(vel);
     
 
     pros::delay(seconds);
