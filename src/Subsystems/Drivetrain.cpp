@@ -38,6 +38,22 @@ void Drivetrain::updateDrivetrain(pros::Controller &driver)
         //we DO NOT care about what the joystick values are here
     case MOVE_DISTANCE:
     {
+        rightFront->move_velocity(100);
+        rightBack->move_velocity(100);
+
+        leftFront->move_velocity(100);
+        leftBack->move_velocity(100);
+
+        if (driver.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B))
+        {
+            rightFront->move_velocity(100);
+            rightBack->move_velocity(100);
+
+            leftFront->move_velocity(100);
+            leftBack->move_velocity(100);
+
+        }
+
         
     }
 
@@ -52,10 +68,16 @@ void Drivetrain::updateDrivetrain(pros::Controller &driver)
       
       
         //ADD MORE MOTORS
-        rightFront->move_velocity(fwd_val);
+        rightFront->move_velocity(fwd_val - turn_val);
+        rightBack->move_velocity(fwd_val - turn_val);
+
+        leftFront->move_velocity(fwd_val + turn_val);
+        leftBack->move_velocity(fwd_val + turn_val);
         
-        //IF THE 'A' BUTTON IS PRESSED, SWITCH TO MOVE DISTANCE MODE
-        break;
+        if (driver.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A))
+        {
+            break;
+        }
     }
 
 // ======================== IGNORE THESE ====================================================================================
@@ -94,5 +116,7 @@ void Drivetrain::moveSeconds(int seconds, int vel)
 void Drivetrain::stop()
 {
     this->rightFront->move_velocity(0);
-   
+    this->rightBack->move_velocity(0);
+    this->leftFront->move_velocity(0);
+    this->leftBack->move_velocity(0);
 }
